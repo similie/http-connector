@@ -4,13 +4,13 @@ import {
   IEntity,
   IEntityPartial,
   IModelAttributes,
+  IModelCollection,
   IModelConfigurationDetails,
   IQueryBaseType,
   IQueryLimiters,
   IQueryOrPartial,
   IValuesToEscape,
   LiveConnection,
-  ModelCollection,
 } from "@similie/one-model-connector-entities";
 import {
   HttpMethod,
@@ -529,7 +529,7 @@ export class HTTPConnector extends LiveConnection {
    */
   public override async addToCollection(
     value: any,
-    collection: ModelCollection<IEntity>,
+    collection: IModelCollection<IEntity>,
   ): Promise<void | IEntity> {
     const modelConfig: IModelConfigurationDetails = {
       modelname: collection.model,
@@ -550,7 +550,7 @@ export class HTTPConnector extends LiveConnection {
    */
   public override async removeFromCollection(
     value: any,
-    collection: ModelCollection<IEntity>,
+    collection: IModelCollection<IEntity>,
   ): Promise<void | IEntity> {
     const modelConfig: IModelConfigurationDetails = {
       modelname: collection.model,

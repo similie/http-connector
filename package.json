@@ -1,8 +1,8 @@
 {
   "name": "@similie/http-connector",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "dependencies": {
-    "@similie/one-model-connector-entities": "git+ssh://git@github.com:similie/one-model-connector-entities.git#1.0.9",
+    "@similie/one-model-connector-entities": "git+ssh://git@github.com:similie/one-model-connector-entities.git#1.0.10",
     "@types/isomorphic-fetch": "0.0.39",
     "isomorphic-fetch": "^3.0.0",
     "tslib": "^2.3.0"
