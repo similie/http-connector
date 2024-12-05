@@ -45,7 +45,7 @@ export class HTTPConnector extends LiveConnection {
   public constructor(
     private _url: string = "",
     global: boolean = true,
-    private _cors: boolean = true,
+    private _cors: boolean = true
   ) {
     super(global);
     this.httpConnection = new HttpConnection(this._cors);
@@ -134,7 +134,7 @@ export class HTTPConnector extends LiveConnection {
 
     if (limiters.populate) {
       queryString.push(
-        `populate=${this.stringAndEncodeObject(this.buildPopulants(limiters))}`,
+        `populate=${this.stringAndEncodeObject(this.buildPopulants(limiters))}`
       );
     }
 
@@ -146,7 +146,9 @@ export class HTTPConnector extends LiveConnection {
   }
 
   /**
-   *
+   * @private
+   * @name appendQueryToUrl
+   * @description appends the query to the url
    * @param {any} query
    * @param {IQueryLimiters} limiters
    * @param {string} url
@@ -157,7 +159,7 @@ export class HTTPConnector extends LiveConnection {
     query: any,
     limiters: IQueryLimiters,
     url: string,
-    method: HttpMethod,
+    method: HttpMethod
   ) {
     if (method !== HttpMethod.GET) {
       return url;
@@ -174,7 +176,7 @@ export class HTTPConnector extends LiveConnection {
   private get localHeaders() {
     return Object.assign(
       this.CorsHeader.headers as Record<string, string>,
-      this.userContent,
+      this.userContent
     );
   }
 
@@ -228,11 +230,11 @@ export class HTTPConnector extends LiveConnection {
     query: any,
     limiters: IQueryLimiters,
     url: string,
-    method: HttpMethod,
+    method: HttpMethod
   ) {
     return this.httpConnection.send(
       this.appendQueryToUrl(query, limiters, url, method),
-      this.setQueryData(query, method),
+      this.setQueryData(query, method)
     );
   }
 
@@ -251,7 +253,7 @@ export class HTTPConnector extends LiveConnection {
     limiters: IQueryLimiters,
     url: string,
     method: HttpMethod,
-    cb: (chunk: string) => Promise<void>,
+    cb: (chunk: string) => Promise<void>
   ) {
     const results = await this.getRequestResults(query, limiters, url, method);
     return this.httpConnection.fetchStreamData(results, cb);
@@ -270,7 +272,7 @@ export class HTTPConnector extends LiveConnection {
     query: any,
     limiters: IQueryLimiters,
     url: string,
-    method: HttpMethod,
+    method: HttpMethod
   ) {
     const results = await this.getRequestResults(query, limiters, url, method);
     if (!results.ok) {
@@ -348,7 +350,7 @@ export class HTTPConnector extends LiveConnection {
   public override async findOne(
     query: any,
     limiters: IQueryLimiters,
-    modelConfig?: IModelConfigurationDetails,
+    modelConfig?: IModelConfigurationDetails
   ) {
     const hasId =
       query.id && !Array.isArray(query.id) && Object.keys(query).length === 1;
@@ -361,7 +363,7 @@ export class HTTPConnector extends LiveConnection {
       sendQuery,
       limiters,
       url,
-      HttpMethod.GET,
+      HttpMethod.GET
     );
     return Array.isArray(results) ? results[0] : results;
   }
@@ -378,7 +380,7 @@ export class HTTPConnector extends LiveConnection {
   public override find(
     query: any,
     limiters: IQueryLimiters,
-    modelConfig?: IModelConfigurationDetails,
+    modelConfig?: IModelConfigurationDetails
   ) {
     const url = this.getApiRoute(modelConfig);
     return this.buildQuery(query, limiters, url, HttpMethod.GET);
@@ -394,12 +396,12 @@ export class HTTPConnector extends LiveConnection {
    */
   public override async save(
     values: any,
-    modelConfig?: IModelConfigurationDetails,
+    modelConfig?: IModelConfigurationDetails
   ) {
     const id = this.getId(values);
     if (!id) {
       throw new Error(
-        `A saved model must contain and ID form this ${modelConfig?.modelname}`,
+        `A saved model must contain and ID form this ${modelConfig?.modelname}`
       );
     }
     const url = this.getApiRoute(modelConfig) + id;
@@ -418,7 +420,7 @@ export class HTTPConnector extends LiveConnection {
   public override async update(
     query: IQueryBaseType<IEntity>,
     update: any,
-    modelConfig?: IModelConfigurationDetails,
+    modelConfig?: IModelConfigurationDetails
   ) {
     const url = this.getApiRoute(modelConfig);
     return this.buildQuery(
@@ -428,7 +430,7 @@ export class HTTPConnector extends LiveConnection {
       },
       {},
       url,
-      HttpMethod.PUT,
+      HttpMethod.PUT
     );
   }
 
@@ -442,7 +444,7 @@ export class HTTPConnector extends LiveConnection {
    */
   public override async count(
     query: any,
-    modelConfig?: IModelConfigurationDetails,
+    modelConfig?: IModelConfigurationDetails
   ) {
     const url = this.getApiRoute(modelConfig) + "count";
     return this.buildQuery(query, {}, url, HttpMethod.GET);
@@ -458,12 +460,12 @@ export class HTTPConnector extends LiveConnection {
    */
   public override async destroy(
     query: number | IEntityPartial<IEntity>,
-    modelConfig?: IModelConfigurationDetails,
+    modelConfig?: IModelConfigurationDetails
   ) {
     const id = this.getId(query);
     if (!id) {
       throw new Error(
-        `A saved model must contain and ID form this ${modelConfig!.modelname}`,
+        `A saved model must contain and ID form this ${modelConfig!.modelname}`
       );
     }
     const url = this.getApiRoute(modelConfig) + id;
@@ -480,7 +482,7 @@ export class HTTPConnector extends LiveConnection {
    */
   public override async create(
     query: IEntityPartial<IEntity>,
-    modelConfig?: IModelConfigurationDetails,
+    modelConfig?: IModelConfigurationDetails
   ) {
     const url = this.getApiRoute(modelConfig);
     return this.buildQuery(query, {}, url, HttpMethod.POST);
@@ -496,7 +498,7 @@ export class HTTPConnector extends LiveConnection {
    */
   public override async createMany(
     query: IEntityPartial<IEntity>[],
-    modelConfig?: IModelConfigurationDetails,
+    modelConfig?: IModelConfigurationDetails
   ) {
     const url = this.getApiRoute(modelConfig);
     return this.buildQuery(query, {}, url, HttpMethod.POST);
@@ -512,7 +514,7 @@ export class HTTPConnector extends LiveConnection {
    */
   public override async destroyAll(
     query: IQueryBaseType<IEntity>,
-    modelConfig?: IModelConfigurationDetails,
+    modelConfig?: IModelConfigurationDetails
   ) {
     const url = this.getApiRoute(modelConfig);
     return this.buildQuery(query, {}, url, HttpMethod.DELETE);
@@ -529,7 +531,7 @@ export class HTTPConnector extends LiveConnection {
    */
   public override async addToCollection(
     value: any,
-    collection: IModelCollection<IEntity>,
+    collection: IModelCollection<IEntity>
   ): Promise<void | IEntity> {
     const modelConfig: IModelConfigurationDetails = {
       modelname: collection.model,
@@ -550,7 +552,7 @@ export class HTTPConnector extends LiveConnection {
    */
   public override async removeFromCollection(
     value: any,
-    collection: IModelCollection<IEntity>,
+    collection: IModelCollection<IEntity>
   ): Promise<void | IEntity> {
     const modelConfig: IModelConfigurationDetails = {
       modelname: collection.model,
@@ -569,7 +571,7 @@ export class HTTPConnector extends LiveConnection {
    * @returns {Promise<Record<string, IModelAttributes>>}
    */
   public override attr(
-    modelConfig?: IModelConfigurationDetails,
+    modelConfig?: IModelConfigurationDetails
   ): Promise<Record<string, IModelAttributes>> {
     const url = this.getApiRoute(modelConfig) + "schema";
     return this.buildQuery({}, {}, url, HttpMethod.GET);
@@ -588,7 +590,7 @@ export class HTTPConnector extends LiveConnection {
   public override async sum(
     numericAttrName: keyof IEntity,
     query?: IQueryOrPartial<IEntity>,
-    modelConfig?: IModelConfigurationDetails,
+    modelConfig?: IModelConfigurationDetails
   ) {
     const url = this.getApiRoute(modelConfig) + `sum/${numericAttrName}`;
     return this.buildQuery(query, {}, url, HttpMethod.GET);
@@ -607,7 +609,7 @@ export class HTTPConnector extends LiveConnection {
   public override async avg(
     numericAttrName: keyof IEntity,
     query?: IQueryOrPartial<IEntity>,
-    modelConfig?: IModelConfigurationDetails,
+    modelConfig?: IModelConfigurationDetails
   ) {
     const url = this.getApiRoute(modelConfig) + `avg/${numericAttrName}`;
     return this.buildQuery(query, {}, url, HttpMethod.GET);
@@ -628,7 +630,7 @@ export class HTTPConnector extends LiveConnection {
     query: IQueryOrPartial<IEntity>,
     limiters: IQueryLimiters,
     modelConfig: IModelConfigurationDetails,
-    cb: (model: IEntity[]) => void | Promise<void>,
+    cb: (model: IEntity[]) => void | Promise<void>
   ): Promise<any> {
     const url =
       this.getApiRoute(modelConfig) + "stream-batch/" + limiters.batchNumber;
@@ -644,7 +646,7 @@ export class HTTPConnector extends LiveConnection {
         } catch {
           //
         }
-      },
+      }
     );
   }
 
@@ -664,7 +666,7 @@ export class HTTPConnector extends LiveConnection {
     query: IQueryOrPartial<IEntity>,
     limiters: IQueryLimiters,
     modelConfig: IModelConfigurationDetails,
-    cb: (model: IEntity) => void | Promise<void>,
+    cb: (model: IEntity) => void | Promise<void>
   ): Promise<any> {
     const url = this.getApiRoute(modelConfig) + "stream";
     return await this.buildStreamQuery(
@@ -679,7 +681,7 @@ export class HTTPConnector extends LiveConnection {
         } catch {
           //
         }
-      },
+      }
     );
   }
 
@@ -696,7 +698,7 @@ export class HTTPConnector extends LiveConnection {
   public override async findOrCreate(
     criteria: IQueryOrPartial<IEntity>,
     initialValues: IEntityPartial<IEntity>,
-    modelConfig?: IModelConfigurationDetails,
+    modelConfig?: IModelConfigurationDetails
   ) {
     const url = this.getApiRoute(modelConfig) + "seek";
     return this.buildQuery(
@@ -706,7 +708,7 @@ export class HTTPConnector extends LiveConnection {
       },
       {},
       url,
-      HttpMethod.POST,
+      HttpMethod.POST
     );
   }
 
@@ -722,7 +724,7 @@ export class HTTPConnector extends LiveConnection {
   public override async query(
     paramURL: string,
     valuesToEscape?: IValuesToEscape,
-    modelConfig?: IModelConfigurationDetails,
+    modelConfig?: IModelConfigurationDetails
   ) {
     const url = modelConfig
       ? this.getApiRoute(modelConfig) + paramURL

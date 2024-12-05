@@ -1,13 +1,19 @@
 {
   "name": "@similie/http-connector",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "dependencies": {
-    "@similie/one-model-connector-entities": "git+ssh://git@github.com:similie/one-model-connector-entities.git#1.0.10",
+    "@similie/model-connect-entities": "^1.0.11",
     "@types/isomorphic-fetch": "0.0.39",
     "isomorphic-fetch": "^3.0.0",
     "tslib": "^2.3.0"
   },
   "type": "commonjs",
   "main": "./src/index.js",
-  "typings": "./src/index.d.ts"
+  "typings": "./src/index.d.ts",
+  "devDependencies": {
+    "typedoc": "^0.27.3"
+  },
+  "scripts": {
+    "docs": "./node_modules/typedoc/bin/typedoc --out docs src"
+  }
 }
