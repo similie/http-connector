@@ -1,6 +1,6 @@
 {
   "name": "@similie/http-connector",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "dependencies": {
     "@similie/model-connect-entities": "^1.0.11",
     "@types/isomorphic-fetch": "0.0.39",

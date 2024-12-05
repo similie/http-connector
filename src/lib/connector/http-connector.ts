@@ -11,7 +11,7 @@ import {
   IQueryOrPartial,
   IValuesToEscape,
   LiveConnection,
-} from "@similie/one-model-connector-entities";
+} from "@similie/model-connect-entities";
 import {
   HttpMethod,
   HttpConnection,
@@ -294,7 +294,18 @@ export class HTTPConnector extends LiveConnection {
   ////////////
   // Public //
   ////////////
-
+  // noop
+  public async init() {
+    // do nothing
+  }
+  // noop
+  public keys() {
+    return [] as string[];
+  }
+  // noop
+  public async tearDown() {
+    // do nothing
+  }
   /**
    * @get
    * @description pulls the details of the active

@@ -46,25 +46,29 @@ npm install @similie/http-connector
 ```
 
 ```typescript
-import { GlobalConnection, IEntity, Model } from "@similie/model-connect-entites";
+import {
+  GlobalConnection,
+  Model,
+  IEntity,
+} from "@similie/model-connect-entities";
 import { HTTPConnector } from "@similie/http-connector";
 GlobalConnection.startInstance(new HTTPConnector("https://api.example.com"));
 
-
 interface IUser extends IEntity {
-  id: number;
   name: string;
+  age: number;
   email: string;
 }
+class UserModel extends Model<IUser> {}
 
-class User extends Model<IUser> {
-  constructor() {
-    super("users");
-  }
-}
+const um = new UserModel();
 
-const uModel = new User();
-const users =  uModel.find();
+um.find({ where: { name: "boomo", age: { ">=": 30 } } })
+  .fetch()
+  .then((users: IUser[]) => {
+    console.log("My users", users);
+  });
+
 
 
 
