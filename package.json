@@ -1,6 +1,6 @@
 {
   "name": "@similie/http-connector",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "dependencies": {
     "@similie/model-connect-entities": "^1.0.11",
     "@types/isomorphic-fetch": "0.0.39",
@@ -8,12 +8,14 @@
     "tslib": "^2.3.0"
   },
   "type": "commonjs",
-  "main": "./src/index.js",
-  "typings": "./src/index.d.ts",
+  "main": "./dist/index.js",
+  "typings": "./dist/index.d.ts",
   "devDependencies": {
+    "standard-version": "^9.5.0",
     "typedoc": "^0.27.3"
   },
   "scripts": {
-    "docs": "./node_modules/typedoc/bin/typedoc --out docs src"
+    "docs": "./node_modules/typedoc/bin/typedoc --out docs src",
+    "release": "standard-version"
   }
 }
