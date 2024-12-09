@@ -638,7 +638,7 @@ export class HTTPConnector extends LiveConnection {
    * @returns {Promise<any>}
    */
   public override async streamBatch(
-    query: IQueryOrPartial<IEntity>,
+    query: IQueryOrPartial<IEntity> = {},
     limiters: IQueryLimiters,
     modelConfig: IModelConfigurationDetails,
     cb: (model: IEntity[]) => void | Promise<void>
@@ -674,7 +674,7 @@ export class HTTPConnector extends LiveConnection {
    * @returns {Promise<any>}
    */
   public override async streamEach(
-    query: IQueryOrPartial<IEntity>,
+    query: IQueryOrPartial<IEntity> = {},
     limiters: IQueryLimiters,
     modelConfig: IModelConfigurationDetails,
     cb: (model: IEntity) => void | Promise<void>
